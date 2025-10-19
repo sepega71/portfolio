@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 import ProjectModal from "./project-modal";
 import { Repo } from "@/lib/types";
+import ProjectImage from "./ProjectImage";
 
 export default function Projects() {
   const { ref } = useSectionInView("Projects", 0.2);
@@ -75,8 +76,15 @@ export default function Projects() {
                 className="bg-white border border-black/5 rounded-lg overflow-hidden dark:bg-white/10 dark:border-white/20 cursor-pointer"
                 whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px -5px rgba(0, 0, 0, 0.1)" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setSelectedRepo(repo)}
+                onClick={() => {
+                  if (repo.homepage) {
+                    window.open(repo.homepage, "_blank");
+                  } else {
+                    setSelectedRepo(repo);
+                  }
+                }}
               >
+                <ProjectImage repoName={repo.name} />
                 <div className="p-4">
                   <div className="flex justify-between items-start">
                     <h3 className="text-lg font-semibold">{repo.name}</h3>
